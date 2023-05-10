@@ -1,4 +1,5 @@
-https://dev.to/ccunha/listas-encadeadas-157#:~:text=No%20Java%2C%20a%20implementa%C3%A7%C3%A3os%20das,a%20posi%C3%A7%C3%A3o%20do%20elemento%20posterior.
+//referencia de linked List
+//https://dev.to/ccunha/listas-encadeadas-157#:~:text=No%20Java%2C%20a%20implementa%C3%A7%C3%A3os%20das,a%20posi%C3%A7%C3%A3o%20do%20elemento%20posterior.
 
 // Online Java Compiler
 // Use this editor to write, compile and run your Java code online
