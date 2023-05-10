@@ -1,0 +1,56 @@
+https://dev.to/ccunha/listas-encadeadas-157#:~:text=No%20Java%2C%20a%20implementa%C3%A7%C3%A3os%20das,a%20posi%C3%A7%C3%A3o%20do%20elemento%20posterior.
+
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+import java.util.LinkedList;
+import java.util.Collections;
+
+class HelloWorld {
+    public static void main(String[] args) {
+        LinkedList<Integer> lista = GerarLista();
+        System.out.println("Estado inicial da lista: " +  lista);
+        
+        //removendo 1 item da lista
+        lista.removeFirst();
+        
+        System.out.println("");
+        System.out.println("Apos remocao primeiro item: " +  lista);
+        
+        System.out.println("Voltando lista para o estado inicial..");
+        // reiniciando lista
+        lista = GerarLista();
+        
+        lista.removeLast();
+        System.out.println("Apos remocao ultimo item: " + lista);
+        
+        System.out.println("Voltando lista para o estado inicial..");
+        lista = GerarLista();
+       
+        System.out.println("Lista na posicao 2: " + lista.get(2));
+        
+        LinkedList<Integer> listaReverse = GerarLista();
+         
+        Collections.reverse(listaReverse);
+        System.out.println("Lista Reversa: " + listaReverse);
+        
+        //System.out.println("" + lista);
+    }
+    
+    private static LinkedList<Integer> GerarLista() { 
+        LinkedList<Integer> lista = new LinkedList<Integer>();
+        
+        //adicionando elemento na lista
+        lista.add(8);
+        lista.add(3);
+        lista.add(2);
+        
+        //adicionando elemneto no inicio da lista
+        lista.addFirst(5);
+        
+        //adicionar elemento ao fim da lista
+        lista.addLast(7);
+        
+        return lista;
+    }
+    
+}
