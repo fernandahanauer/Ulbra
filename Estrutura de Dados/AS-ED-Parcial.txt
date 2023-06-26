@@ -1,0 +1,196 @@
+import java.util.Arrays;
+
+class No {
+   int valor;
+   No esquerda;
+   No direita;
+
+   public No(int valor) {
+       this.valor = valor;
+       this.esquerda = null;
+       this.direita = null;
+   }
+}
+
+class ArvoreBinaria {
+   private No raiz;
+
+   public ArvoreBinaria() {
+       this.raiz = null;
+   }
+
+   // Adiciona um novo nó na árvore
+   public void adicionar(int valor) {
+       raiz = adicionarNo(raiz, valor);
+   }
+
+   // Função auxiliar para adicionar um nó recursivamente
+   private No adicionarNo(No no, int valor) {
+       if (no == null) {
+           return new No(valor);
+       }
+
+       if (valor < no.valor) {
+           no.esquerda = adicionarNo(no.esquerda, valor);
+       } else if (valor > no.valor) {
+           no.direita = adicionarNo(no.direita, valor);
+       }
+
+       return no;
+   }
+
+   // Remove um nó da árvore
+   public void remover(int valor) {
+       raiz = removerNo(raiz, valor);
+   }
+
+   // Função auxiliar para remover um nó recursivamente
+   private No removerNo(No no, int valor) {
+       if (no == null) {
+           return null;
+       }
+
+       if (valor < no.valor) {
+           no.esquerda = removerNo(no.esquerda, valor);
+       } else if (valor > no.valor) {
+           no.direita = removerNo(no.direita, valor);
+       } else {
+           if (no.esquerda == null) {
+               return no.direita;
+           } else if (no.direita == null) {
+               return no.esquerda;
+           }
+
+           no.valor = encontrarMinimoValor(no.direita);
+           no.direita = removerNo(no.direita, no.valor);
+       }
+
+       return no;
+   }
+
+   // Encontra o valor mínimo na subárvore direita
+   private int encontrarMinimoValor(No no) {
+       int minimoValor = no.valor;
+       while (no.esquerda != null) {
+           minimoValor = no.esquerda.valor;
+           no = no.esquerda;
+       }
+       return minimoValor;
+   }
+
+   // Percorre a árvore em ordem
+   public void percorrerEmOrdem() {
+       percorrerEmOrdem(raiz);
+   }
+
+   // Função auxiliar para percorrer a árvore em ordem recursivamente
+   private void percorrerEmOrdem(No no) {
+       if (no != null) {
+           percorrerEmOrdem(no.esquerda);
+           System.out.print(no.valor + " ");
+           percorrerEmOrdem(no.direita);
+       }
+   }
+
+   // Percorre a árvore em pré-ordem
+   public void percorrerPreOrdem() {
+       percorrerPreOrdem(raiz);
+   }
+
+   // Função auxiliar para percorrer a árvore em pré-ordem recursivamente
+   private void percorrerPreOrdem(No no) {
+       if (no != null) {
+           System.out.print(no.valor + " ");
+           percorrerPreOrdem(no.esquerda);
+           percorrerPreOrdem(no.direita);
+       }
+   }
+
+   // Percorre a árvore em pós-ordem
+   public void percorrerPosOrdem() {
+       percorrerPosOrdem(raiz);
+   }
+
+   // Função auxiliar para percorrer a árvore em pós-ordem recursivamente
+   private void percorrerPosOrdem(No no) {
+       if (no != null) {
+           percorrerPosOrdem(no.esquerda);
+           percorrerPosOrdem(no.direita);
+           System.out.print(no.valor + " ");
+       }
+   }
+
+   // Mostra a estrutura da árvore
+   public void mostrarArvore() {
+       mostrarArvoreRecursivamente(raiz, "");
+   }
+
+   // Função auxiliar para mostrar a estrutura da árvore recursivamente
+   private void mostrarArvoreRecursivamente(No no, String prefixo) {
+       if (no != null) {
+           System.out.println(prefixo + "|-- " + no.valor);
+           mostrarArvoreRecursivamente(no.esquerda, prefixo + "|   ");
+           mostrarArvoreRecursivamente(no.direita, prefixo + "    ");
+       }
+   }
+
+   // Cria uma árvore binária com base em um array de elementos ordenados
+   public static ArvoreBinaria adicionarElementos(int[] elementos) {
+       Arrays.sort(elementos);
+       return adicionarElementosRecursivamente(elementos, 0, elementos.length - 1);
+   }
+
+   // Função auxiliar para adicionar elementos em uma árvore binária recursivamente
+   private static ArvoreBinaria adicionarElementosRecursivamente(int[] elementos, int inicio, int fim) {
+       ArvoreBinaria arvore = new ArvoreBinaria();
+       if (inicio > fim) {
+           return arvore;
+       }
+
+       int meio = (inicio + fim) / 2;
+       arvore.adicionar(elementos[meio]);
+
+       arvore.raiz.esquerda = adicionarElementosRecursivamente(elementos, inicio, meio - 1);
+       arvore.raiz.direita = adicionarElementosRecursivamente(elementos, meio + 1, fim);
+
+       return arvore;
+   }
+
+   // Percorre a árvore de forma genérica (em ordem, pré-ordem ou pós-ordem)
+   public void percorrerArvoreRecursivamente(No no, String percurso) {
+       if (no != null) {
+           if (percurso.equals("emOrdem")) {
+               percorrerArvoreRecursivamente(no.esquerda, percurso);
+               System.out.print(no.valor + " ");
+               percorrerArvoreRecursivamente(no.direita, percurso);
+           } else if (percurso.equals("preOrdem")) {
+               System.out.print(no.valor + " ");
+               percorrerArvoreRecursivamente(no.esquerda, percurso);
+               percorrerArvoreRecursivamente(no.direita, percurso);
+           } else if (percurso.equals("posOrdem")) {
+               percorrerArvoreRecursivamente(no.esquerda, percurso);
+               percorrerArvoreRecursivamente(no.direita, percurso);
+               System.out.print(no.valor + " ");
+           }
+       }
+   }
+}
+
+public class Main {
+   public static void main(String[] args) {
+       int[] elementos = {4, 2, 6, 1, 3, 5, 7};
+       ArvoreBinaria arvore = ArvoreBinaria.adicionarElementos(elementos);
+
+       System.out.println("Árvore em ordem:");
+       arvore.percorrerArvoreRecursivamente(arvore.raiz, "emOrdem");
+
+       System.out.println("\n\nÁrvore pré-ordem:");
+       arvore.percorrerArvoreRecursivamente(arvore.raiz, "preOrdem");
+
+       System.out.println("\n\nÁrvore pós-ordem:");
+       arvore.percorrerArvoreRecursivamente(arvore.raiz, "posOrdem");
+
+       System.out.println("\n\nEstrutura da árvore:");
+       arvore.mostrarArvore();
+   }
+}
